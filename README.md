@@ -5,65 +5,67 @@
 **Move around your code at the speed of thought.**
 Jumper turns "go to line" into a dialog-free, keyboard-only flow, adds a jump-back history that survives edits, and ships workspace-wide bookmarks that stick to the *code*, not to a line number.
 
-- ⌨️ **Inline go-to-line** — no dialog, just type the number
-- 👀 **Peek a line** — see (and edit) any line in a floating box without leaving your spot
-- ↩️ **Jump back** — return to where you were, even after the file changed
-- 🔖 **Bookmarks** — titled, tracked through edits, saved in `.vscode/`, searchable
+- ⌨️ **Inline go-to-line**: no dialog, just type the number
+- 👀 **Peek a line**: see (and edit) any line in a floating box without leaving your spot
+- ↩️ **Jump back**: return to where you were, even after the file changed
+- 🔖 **Bookmarks**: titled, tracked through edits, saved in `.vscode/`, searchable
+
+> **Keys on macOS:** this document uses the Windows/Linux keys. On a Mac, read <kbd>Ctrl</kbd> as <kbd>⌘</kbd> (Command), <kbd>Alt</kbd> as <kbd>⌥</kbd> (Option) and <kbd>Shift</kbd> as <kbd>⇧</kbd>. Every table also lists the Mac keys in full.
 
 ---
 
 ## Inline go-to-line
 
-Press <kbd>⌘</kbd><kbd>L</kbd> (<kbd>Ctrl</kbd><kbd>L</kbd> on Windows/Linux) and just start typing digits. The cursor follows you live.
+Press <kbd>Ctrl</kbd>+<kbd>L</kbd> (macOS: <kbd>⌘</kbd><kbd>L</kbd>) and just start typing digits. The cursor follows you live.
 
-| Key | What it does |
-| --- | --- |
-| `0`–`9` (also `۰`–`۹`, `٠`–`٩`) | Jump to that line as you type |
-| <kbd>Backspace</kbd> | Delete a digit. When the number is empty you're back where you started |
-| <kbd>↑</kbd> / <kbd>↓</kbd> | Previous / next line number |
-| <kbd>←</kbd> / <kbd>→</kbd> | Start / end of the line, then leave the mode |
-| <kbd>Enter</kbd> | Leave the mode and stay on the line |
-| <kbd>⌘</kbd><kbd>Enter</kbd> | Insert a line **below** and start typing there |
-| <kbd>⌘</kbd><kbd>⇧</kbd><kbd>Enter</kbd> | Insert a line **above** and start typing there |
-| <kbd>Esc</kbd> | Cancel and return to the original position |
-| any other key | Leave the mode and type that character right there |
+| Key | macOS | What it does |
+| --- | --- | --- |
+| `0`–`9` (also `۰`–`۹`, `٠`–`٩`) | same | Jump to that line as you type |
+| <kbd>Backspace</kbd> | same | Delete a digit. When the number is empty you're back where you started |
+| <kbd>↑</kbd> / <kbd>↓</kbd> | same | Previous / next line number |
+| <kbd>←</kbd> / <kbd>→</kbd> | same | Start / end of the line, then leave the mode |
+| <kbd>Enter</kbd> | same | Leave the mode and stay on the line |
+| <kbd>Ctrl</kbd>+<kbd>Enter</kbd> | <kbd>⌘</kbd><kbd>Enter</kbd> | Insert a line **below** and start typing there |
+| <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Enter</kbd> | <kbd>⌘</kbd><kbd>⇧</kbd><kbd>Enter</kbd> | Insert a line **above** and start typing there |
+| <kbd>Esc</kbd> | same | Cancel and return to the original position |
+| any other key | same | Leave the mode and type that character right there |
 
 Moving the cursor with the mouse or switching editors also leaves the mode.
 
 ## Peek mode
 
-Press <kbd>⌘</kbd><kbd>⇧</kbd><kbd>L</kbd> and type a line number. The line opens in a VS Code peek box **while your cursor stays put**. Everything above works here too, with a twist: *accepting* moves the caret **into the peek box**, so you can edit the peeked line in place.
+Press <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>L</kbd> (macOS: <kbd>⌘</kbd><kbd>⇧</kbd><kbd>L</kbd>) and type a line number. The line opens in a VS Code peek box **while your cursor stays put**. All the keys above work here too, with a twist: *accepting* moves the caret **into the peek box**, so you can edit the peeked line in place.
 
-- <kbd>Enter</kbd>, <kbd>⌘</kbd><kbd>Enter</kbd>, <kbd>⌘</kbd><kbd>⇧</kbd><kbd>Enter</kbd>, <kbd>←</kbd>/<kbd>→</kbd> or any character focus the editor inside the box
+- <kbd>Enter</kbd>, <kbd>Ctrl</kbd>+<kbd>Enter</kbd>, <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Enter</kbd>, <kbd>←</kbd>/<kbd>→</kbd> or any character focus the editor inside the box
 - <kbd>Esc</kbd> closes the box
 - <kbd>↑</kbd> / <kbd>↓</kbd> flip through neighbouring lines
 
 ## Jump back
 
-<kbd>⌘</kbd><kbd>⌥</kbd><kbd>L</kbd> returns to where you were before your last jump (go-to-line or bookmark). Press it again to keep walking back.
+<kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>L</kbd> (macOS: <kbd>⌘</kbd><kbd>⌥</kbd><kbd>L</kbd>) returns to where you were before your last jump (go-to-line or bookmark). Press it again to keep walking back.
 
-VS Code's own "go back" can lose its place when the file is edited. Jumper keeps its own history and **moves every saved position with your edits** — insert lines above, delete a block, split a line — and the entry still points at the same code.
+VS Code's own "go back" can lose its place when the file is edited. Jumper keeps its own history and **moves every saved position with your edits**: insert lines above, delete a block, split a line, and the entry still points at the same code.
 
 ## Bookmarks
 
-| Key | What it does |
-| --- | --- |
-| <kbd>⌘</kbd><kbd>⌥</kbd><kbd>K</kbd> | Add a bookmark on the current line (you pick the title), or remove it if one exists |
-| <kbd>⌘</kbd><kbd>⌥</kbd><kbd>J</kbd> | Search all bookmarks |
+| Key | macOS | What it does |
+| --- | --- | --- |
+| <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>K</kbd> | <kbd>⌘</kbd><kbd>⌥</kbd><kbd>K</kbd> | Add a bookmark on the current line (you pick the title), or remove it if one exists |
+| <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>J</kbd> | <kbd>⌘</kbd><kbd>⌥</kbd><kbd>J</kbd> | Search all bookmarks |
 
 In the search list:
 
-| Key | What it does |
-| --- | --- |
-| <kbd>Enter</kbd> | Go to the bookmark |
-| <kbd>⌘</kbd><kbd>Enter</kbd> | Open it in a side editor group |
-| <kbd>⌘</kbd><kbd>⇧</kbd><kbd>Enter</kbd> | Peek it (and edit it in place) |
+| Key | macOS | What it does |
+| --- | --- | --- |
+| <kbd>Enter</kbd> | same | Go to the bookmark |
+| <kbd>Ctrl</kbd>+<kbd>Enter</kbd> | <kbd>⌘</kbd><kbd>Enter</kbd> | Open it in a side editor group |
+| <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Enter</kbd> | <kbd>⌘</kbd><kbd>⇧</kbd><kbd>Enter</kbd> | Peek it (and edit it in place) |
 
 Bookmarked lines get a gutter icon and an overview-ruler mark; hover to see the title. The **Jumper** view in the Activity Bar lists everything grouped by file, with inline rename and delete.
 
 ### Bookmarks follow the code
 
-A bookmark is tied to its line's *content*, not its number. Add lines above, press <kbd>Enter</kbd> at the start of the line, delete a block elsewhere — the bookmark moves along. If a file changes outside VS Code (a `git pull`, another tool), Jumper re-finds each bookmark by its text the next time the file opens.
+A bookmark is tied to its line's *content*, not its number. Add lines above, press <kbd>Enter</kbd> at the start of the line, delete a block elsewhere, and the bookmark moves along. If a file changes outside VS Code (a `git pull`, another tool), Jumper re-finds each bookmark by its text the next time the file opens.
 
 ### Stored in your workspace
 
@@ -82,23 +84,32 @@ The file is re-read when it changes on disk, and only written when there is some
 
 ## Installing
 
-Not on the Marketplace — install it locally:
+Not on the Marketplace, so install it locally.
+
+**Build a `.vsix`** (needs [Node.js](https://nodejs.org)):
 
 ```bash
-# build a .vsix (needs Node.js)
 npx @vscode/vsce package --allow-missing-repository
 code --install-extension jumper-0.1.0.vsix
 ```
 
-or copy/symlink the folder into `~/.vscode/extensions/bsimjoo.jumper-0.1.0` and run **Developer: Reload Window**. To hack on it, open the folder and press <kbd>F5</kbd>.
+**Or copy the folder** into your extensions directory and run **Developer: Reload Window**:
+
+| OS | Extensions directory |
+| --- | --- |
+| Windows | `%USERPROFILE%\.vscode\extensions\bsimjoo.jumper-0.1.0` |
+| Linux | `~/.vscode/extensions/bsimjoo.jumper-0.1.0` |
+| macOS | `~/.vscode/extensions/bsimjoo.jumper-0.1.0` |
+
+To hack on it, open the folder in VS Code and press <kbd>F5</kbd>.
 
 ## Customising keys
 
-Every shortcut is a normal VS Code keybinding; remap them in **Keyboard Shortcuts** (search for `jumper`). Defaults are shown for macOS; on Windows/Linux <kbd>⌘</kbd> becomes <kbd>Ctrl</kbd> and <kbd>⌥</kbd> becomes <kbd>Alt</kbd>.
+Every shortcut is a normal VS Code keybinding; remap them in **Keyboard Shortcuts** (search for `jumper`).
 
 Jumper's "insert line" keys call VS Code's `editor.action.insertLineAfter` / `insertLineBefore`. If you rebind those, rebind `jumper.acceptInsertAfter` / `jumper.acceptInsertBefore` to match.
 
-> Jumper overrides `⌘L` (expand line selection) and `⌘⇧L` (select all occurrences) inside the editor. Rebind `jumper.start` / `jumper.peek` if you'd rather keep them.
+> Jumper overrides <kbd>Ctrl</kbd>+<kbd>L</kbd> (expand line selection) and <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>L</kbd> (select all occurrences) inside the editor. Rebind `jumper.start` / `jumper.peek` if you'd rather keep them.
 
 ## Good to know
 
