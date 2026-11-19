@@ -1,0 +1,268 @@
+{
+  "name": "jumper",
+  "displayName": "Jumper",
+  "description": "Inline go-to-line (no dialog) with a jump-back history that survives edits.",
+  "version": "0.1.0",
+  "publisher": "bsimjoo",
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "main": "./extension.js",
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "jumper.start",
+        "title": "Jumper: Go to Line (inline)"
+      },
+      {
+        "command": "jumper.back",
+        "title": "Jumper: Jump Back"
+      },
+      {
+        "command": "jumper.peek",
+        "title": "Jumper: Peek Line"
+      },
+      {
+        "command": "jumper.lineEnd",
+        "title": "Jumper: Jump Mode - End of Line"
+      },
+      {
+        "command": "jumper.lineStart",
+        "title": "Jumper: Jump Mode - Start of Line"
+      },
+      {
+        "command": "jumper.acceptInsertAfter",
+        "title": "Jumper: Accept and Insert Line Below"
+      },
+      {
+        "command": "jumper.acceptInsertBefore",
+        "title": "Jumper: Accept and Insert Line Above"
+      },
+      {
+        "command": "jumper.lineUp",
+        "title": "Jumper: Jump Mode - Previous Line"
+      },
+      {
+        "command": "jumper.lineDown",
+        "title": "Jumper: Jump Mode - Next Line"
+      },
+      {
+        "command": "jumper.accept",
+        "title": "Jumper: Accept"
+      },
+      {
+        "command": "jumper.cancel",
+        "title": "Jumper: Cancel"
+      },
+      {
+        "command": "jumper.backspace",
+        "title": "Jumper: Backspace"
+      },
+      {
+        "command": "jumper.bookmark.toggle",
+        "title": "Jumper: Toggle Bookmark on Line"
+      },
+      {
+        "command": "jumper.bookmark.rename",
+        "title": "Jumper: Rename Bookmark",
+        "icon": "$(edit)"
+      },
+      {
+        "command": "jumper.bookmark.delete",
+        "title": "Jumper: Delete Bookmark",
+        "icon": "$(trash)"
+      },
+      {
+        "command": "jumper.bookmark.clearAll",
+        "title": "Jumper: Delete All Bookmarks",
+        "icon": "$(clear-all)"
+      },
+      {
+        "command": "jumper.bookmark.open",
+        "title": "Jumper: Open Bookmark"
+      },
+      {
+        "command": "jumper.bookmarks.pick",
+        "title": "Jumper: Search Bookmarks",
+        "icon": "$(search)"
+      },
+      {
+        "command": "jumper.bookmarks.pickOpenSide",
+        "title": "Jumper: Bookmark List - Open to the Side"
+      },
+      {
+        "command": "jumper.bookmarks.pickPeek",
+        "title": "Jumper: Bookmark List - Peek"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "jumper.start",
+        "key": "ctrl+l",
+        "mac": "cmd+l",
+        "when": "editorTextFocus && !jumper.active"
+      },
+      {
+        "command": "jumper.peek",
+        "key": "ctrl+shift+l",
+        "mac": "cmd+shift+l",
+        "when": "editorTextFocus && !jumper.active"
+      },
+      {
+        "command": "jumper.lineEnd",
+        "key": "right",
+        "when": "jumper.active && (editorTextFocus || referenceSearchVisible)"
+      },
+      {
+        "command": "jumper.lineStart",
+        "key": "left",
+        "when": "jumper.active && (editorTextFocus || referenceSearchVisible)"
+      },
+      {
+        "command": "jumper.back",
+        "key": "ctrl+alt+l",
+        "mac": "cmd+alt+l",
+        "when": "editorTextFocus"
+      },
+      {
+        "command": "jumper.backspace",
+        "key": "backspace",
+        "when": "jumper.active && (editorTextFocus || referenceSearchVisible)"
+      },
+      {
+        "command": "jumper.accept",
+        "key": "enter",
+        "when": "jumper.active && (editorTextFocus || referenceSearchVisible)"
+      },
+      {
+        "command": "jumper.acceptInsertAfter",
+        "key": "ctrl+enter",
+        "mac": "cmd+enter",
+        "when": "jumper.active && (editorTextFocus || referenceSearchVisible)"
+      },
+      {
+        "command": "jumper.acceptInsertBefore",
+        "key": "ctrl+shift+enter",
+        "mac": "cmd+shift+enter",
+        "when": "jumper.active && (editorTextFocus || referenceSearchVisible)"
+      },
+      {
+        "command": "jumper.lineUp",
+        "key": "up",
+        "when": "jumper.active && (editorTextFocus || referenceSearchVisible)"
+      },
+      {
+        "command": "jumper.lineDown",
+        "key": "down",
+        "when": "jumper.active && (editorTextFocus || referenceSearchVisible)"
+      },
+      {
+        "command": "jumper.cancel",
+        "key": "escape",
+        "when": "jumper.active && (editorTextFocus || referenceSearchVisible)"
+      },
+      {
+        "command": "jumper.bookmark.toggle",
+        "key": "ctrl+alt+k",
+        "mac": "cmd+alt+k",
+        "when": "editorTextFocus"
+      },
+      {
+        "command": "jumper.bookmarks.pick",
+        "key": "ctrl+alt+j",
+        "mac": "cmd+alt+j"
+      },
+      {
+        "command": "jumper.bookmarks.pickOpenSide",
+        "key": "ctrl+enter",
+        "mac": "cmd+enter",
+        "when": "inQuickOpen && jumper.bookmarkPicker"
+      },
+      {
+        "command": "jumper.bookmarks.pickPeek",
+        "key": "ctrl+shift+enter",
+        "mac": "cmd+shift+enter",
+        "when": "inQuickOpen && jumper.bookmarkPicker"
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "jumper",
+          "title": "Jumper",
+          "icon": "media/activity.svg"
+        }
+      ]
+    },
+    "views": {
+      "jumper": [
+        {
+          "id": "jumper.bookmarks",
+          "name": "Bookmarks"
+        }
+      ]
+    },
+    "menus": {
+      "view/title": [
+        {
+          "command": "jumper.bookmarks.pick",
+          "when": "view == jumper.bookmarks",
+          "group": "navigation@1"
+        },
+        {
+          "command": "jumper.bookmark.clearAll",
+          "when": "view == jumper.bookmarks",
+          "group": "navigation@2"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "jumper.bookmark.rename",
+          "when": "view == jumper.bookmarks && viewItem == bookmark",
+          "group": "inline@1"
+        },
+        {
+          "command": "jumper.bookmark.delete",
+          "when": "view == jumper.bookmarks && viewItem == bookmark",
+          "group": "inline@2"
+        },
+        {
+          "command": "jumper.bookmark.rename",
+          "when": "view == jumper.bookmarks && viewItem == bookmark",
+          "group": "1_modification@1"
+        },
+        {
+          "command": "jumper.bookmark.delete",
+          "when": "view == jumper.bookmarks && viewItem == bookmark",
+          "group": "1_modification@2"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "jumper.bookmark.open",
+          "when": "false"
+        },
+        {
+          "command": "jumper.bookmarks.pickOpenSide",
+          "when": "false"
+        },
+        {
+          "command": "jumper.bookmarks.pickPeek",
+          "when": "false"
+        }
+      ]
+    }
+  },
+  "license": "GPL-3.0-only",
+  "author": {
+    "name": "BSimjoo",
+    "email": "bsimjoo@gmail.com"
+  },
+  "icon": "media/icon.png"
+}
