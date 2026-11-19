@@ -2,7 +2,7 @@
   "name": "kangaroo",
   "displayName": "Kangaroo",
   "description": "Inline go-to-line (no dialog) with a jump-back history that survives edits.",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "publisher": "bsimjoo",
   "engines": {
     "vscode": "^1.80.0"

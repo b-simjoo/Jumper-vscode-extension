@@ -90,16 +90,16 @@ Not on the Marketplace, so install it locally.
 
 ```bash
 npx @vscode/vsce package
-code --install-extension kangaroo-0.1.0.vsix
+code --install-extension kangaroo-0.1.1.vsix
 ```
 
 **Or copy the folder** into your extensions directory and run **Developer: Reload Window**:
 
 | OS | Extensions directory |
 | --- | --- |
-| Windows | `%USERPROFILE%\.vscode\extensions\bsimjoo.kangaroo-0.1.0` |
-| Linux | `~/.vscode/extensions/bsimjoo.kangaroo-0.1.0` |
-| macOS | `~/.vscode/extensions/bsimjoo.kangaroo-0.1.0` |
+| Windows | `%USERPROFILE%\.vscode\extensions\bsimjoo.kangaroo-0.1.1` |
+| Linux | `~/.vscode/extensions/bsimjoo.kangaroo-0.1.1` |
+| macOS | `~/.vscode/extensions/bsimjoo.kangaroo-0.1.1` |
 
 To hack on it, open the folder in VS Code and press <kbd>F5</kbd>.
 
