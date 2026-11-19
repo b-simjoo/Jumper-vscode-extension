@@ -89,7 +89,7 @@ Not on the Marketplace, so install it locally.
 **Build a `.vsix`** (needs [Node.js](https://nodejs.org)):
 
 ```bash
-npx @vscode/vsce package --allow-missing-repository
+npx @vscode/vsce package
 code --install-extension jumper-0.1.0.vsix
 ```
 
