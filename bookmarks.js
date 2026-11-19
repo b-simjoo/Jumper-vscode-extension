@@ -3,7 +3,7 @@
 const vscode = require('vscode');
 const { transformPosition } = require('./positions');
 
-const STATE_KEY = 'jumper.bookmarks';
+const STATE_KEY = 'kangaroo.bookmarks';
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 let ctx;
@@ -15,12 +15,12 @@ let saveTimer = null;
 const treeChanged = new vscode.EventEmitter();
 
 // ---------- storage ----------
-// Bookmarks live in <workspace>/.vscode/jumper-bookmarks.json (paths relative
+// Bookmarks live in <workspace>/.vscode/kangaroo-bookmarks.json (paths relative
 // to the workspace folder, so the file can be committed and shared). Without
 // an open folder they fall back to workspaceState.
 
 let baseUri = null; // first workspace folder
-let storeUri = null; // its .vscode/jumper-bookmarks.json
+let storeUri = null; // its .vscode/kangaroo-bookmarks.json
 let loaded = false; // never write before a successful read
 let lastWritten = ''; // exact file content we last read or wrote
 let pendingMoves = false; // line numbers changed by edits, not yet saved
@@ -29,7 +29,7 @@ function initStore() {
   const folder = vscode.workspace.workspaceFolders && vscode.workspace.workspaceFolders[0];
   if (!folder) return;
   baseUri = folder.uri;
-  storeUri = vscode.Uri.joinPath(folder.uri, '.vscode', 'jumper-bookmarks.json');
+  storeUri = vscode.Uri.joinPath(folder.uri, '.vscode', 'kangaroo-bookmarks.json');
 }
 
 function wsPrefix() {
@@ -92,7 +92,7 @@ async function loadFromDisk() {
       loaded = false; // leave the broken file alone until it parses again
       bookmarks = [];
       vscode.window.showWarningMessage(
-        'Jumper: .vscode/jumper-bookmarks.json is not valid JSON; bookmarks are read-only until it is fixed.');
+        'Kangaroo: .vscode/kangaroo-bookmarks.json is not valid JSON; bookmarks are read-only until it is fixed.');
     }
   }
   treeChanged.fire();
@@ -171,6 +171,12 @@ function onDocumentChange(e) {
     if (line !== b.line) { b.line = line; any = true; }
   }
   if (any) changed(false);
+  // Always redraw this document's icons: the decoration ranges VS Code keeps
+  // stretch over text typed at their edges (e.g. Enter at the end of a
+  // bookmarked line), which would show the icon on the new line too.
+  vscode.window.visibleTextEditors
+    .filter((ed) => ed.document.uri.toString() === uri)
+    .forEach(decorate);
 }
 
 // ---------- gutter icons ----------
@@ -299,7 +305,7 @@ async function peekBookmark(bm) {
 
 function pickBookmarks() {
   if (!bookmarks.length) {
-    vscode.window.showInformationMessage('Jumper: no bookmarks yet.');
+    vscode.window.showInformationMessage('Kangaroo: no bookmarks yet.');
     return;
   }
   const sorted = [...bookmarks].sort((a, b) =>
@@ -316,7 +322,7 @@ function pickBookmarks() {
     bm: b,
   }));
   picker = qp;
-  vscode.commands.executeCommand('setContext', 'jumper.bookmarkPicker', true);
+  vscode.commands.executeCommand('setContext', 'kangaroo.bookmarkPicker', true);
 
   qp.onDidAccept(() => {
     const item = qp.selectedItems[0];
@@ -325,7 +331,7 @@ function pickBookmarks() {
   });
   qp.onDidHide(() => {
     picker = null;
-    vscode.commands.executeCommand('setContext', 'jumper.bookmarkPicker', false);
+    vscode.commands.executeCommand('setContext', 'kangaroo.bookmarkPicker', false);
     qp.dispose();
   });
   qp.show();
@@ -362,7 +368,7 @@ class BookmarkTree {
     item.tooltip = `${rel(b.uri)}:${b.line + 1}\n${b.text || ''}`;
     item.iconPath = new vscode.ThemeIcon('bookmark');
     item.contextValue = 'bookmark';
-    item.command = { command: 'jumper.bookmark.open', title: 'Open', arguments: [node] };
+    item.command = { command: 'kangaroo.bookmark.open', title: 'Open', arguments: [node] };
     return item;
   }
 
@@ -392,6 +398,7 @@ function activate(context, hooks) {
   decoration = vscode.window.createTextEditorDecorationType({
     gutterIconPath: vscode.Uri.file(context.asAbsolutePath('media/bookmark.svg')),
     gutterIconSize: 'contain',
+    rangeBehavior: vscode.DecorationRangeBehavior.ClosedClosed,
     overviewRulerColor: '#3794ff',
     overviewRulerLane: vscode.OverviewRulerLane.Left,
   });
@@ -400,15 +407,15 @@ function activate(context, hooks) {
   context.subscriptions.push(
     decoration,
     vscode.workspace.onDidSaveTextDocument(() => { if (pendingMoves) persist(); }),
-    vscode.window.createTreeView('jumper.bookmarks', { treeDataProvider: new BookmarkTree() }),
-    cmd('jumper.bookmark.toggle', toggle),
-    cmd('jumper.bookmark.rename', rename),
-    cmd('jumper.bookmark.delete', remove),
-    cmd('jumper.bookmark.clearAll', clearAll),
-    cmd('jumper.bookmark.open', (node) => node && node.bm && openBookmark(node.bm, false)),
-    cmd('jumper.bookmarks.pick', pickBookmarks),
-    cmd('jumper.bookmarks.pickOpenSide', withPicked((bm) => openBookmark(bm, true))),
-    cmd('jumper.bookmarks.pickPeek', withPicked(peekBookmark)),
+    vscode.window.createTreeView('kangaroo.bookmarks', { treeDataProvider: new BookmarkTree() }),
+    cmd('kangaroo.bookmark.toggle', toggle),
+    cmd('kangaroo.bookmark.rename', rename),
+    cmd('kangaroo.bookmark.delete', remove),
+    cmd('kangaroo.bookmark.clearAll', clearAll),
+    cmd('kangaroo.bookmark.open', (node) => node && node.bm && openBookmark(node.bm, false)),
+    cmd('kangaroo.bookmarks.pick', pickBookmarks),
+    cmd('kangaroo.bookmarks.pickOpenSide', withPicked((bm) => openBookmark(bm, true))),
+    cmd('kangaroo.bookmarks.pickPeek', withPicked(peekBookmark)),
     vscode.workspace.onDidChangeTextDocument(onDocumentChange),
     vscode.workspace.onDidOpenTextDocument((doc) => {
       verify(doc);
@@ -420,7 +427,7 @@ function activate(context, hooks) {
   if (storeUri) {
     // Pick up edits made outside the extension (git pull, manual edit).
     const watcher = vscode.workspace.createFileSystemWatcher(
-      new vscode.RelativePattern(baseUri, '.vscode/jumper-bookmarks.json'));
+      new vscode.RelativePattern(baseUri, '.vscode/kangaroo-bookmarks.json'));
     const reload = async () => {
       const raw = await readStore();
       if (raw === lastWritten || (raw === null && lastWritten === '')) return; // our own write

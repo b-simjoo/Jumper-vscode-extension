@@ -1,9 +1,9 @@
-<p align="center"><img src="media/icon.png" width="128" alt="Jumper icon"></p>
+<p align="center"><img src="media/icon.png" width="128" alt="Kangaroo icon"></p>
 
-# Jumper
+# Kangaroo
 
 **Move around your code at the speed of thought.**
-Jumper turns "go to line" into a dialog-free, keyboard-only flow, adds a jump-back history that survives edits, and ships workspace-wide bookmarks that stick to the *code*, not to a line number.
+Kangaroo turns "go to line" into a dialog-free, keyboard-only flow, adds a jump-back history that survives edits, and ships workspace-wide bookmarks that stick to the *code*, not to a line number.
 
 - ⌨️ **Inline go-to-line**: no dialog, just type the number
 - 👀 **Peek a line**: see (and edit) any line in a floating box without leaving your spot
@@ -44,7 +44,7 @@ Press <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>L</kbd> (macOS: <kbd>⌘</kbd><kbd>�
 
 <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>L</kbd> (macOS: <kbd>⌘</kbd><kbd>⌥</kbd><kbd>L</kbd>) returns to where you were before your last jump (go-to-line or bookmark). Press it again to keep walking back.
 
-VS Code's own "go back" can lose its place when the file is edited. Jumper keeps its own history and **moves every saved position with your edits**: insert lines above, delete a block, split a line, and the entry still points at the same code.
+VS Code's own "go back" can lose its place when the file is edited. Kangaroo keeps its own history and **moves every saved position with your edits**: insert lines above, delete a block, split a line, and the entry still points at the same code.
 
 ## Bookmarks
 
@@ -61,15 +61,15 @@ In the search list:
 | <kbd>Ctrl</kbd>+<kbd>Enter</kbd> | <kbd>⌘</kbd><kbd>Enter</kbd> | Open it in a side editor group |
 | <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Enter</kbd> | <kbd>⌘</kbd><kbd>⇧</kbd><kbd>Enter</kbd> | Peek it (and edit it in place) |
 
-Bookmarked lines get a gutter icon and an overview-ruler mark; hover to see the title. The **Jumper** view in the Activity Bar lists everything grouped by file, with inline rename and delete.
+Bookmarked lines get a gutter icon and an overview-ruler mark; hover to see the title. The **Kangaroo** view in the Activity Bar lists everything grouped by file, with inline rename and delete.
 
 ### Bookmarks follow the code
 
-A bookmark is tied to its line's *content*, not its number. Add lines above, press <kbd>Enter</kbd> at the start of the line, delete a block elsewhere, and the bookmark moves along. If a file changes outside VS Code (a `git pull`, another tool), Jumper re-finds each bookmark by its text the next time the file opens.
+A bookmark is tied to its line's *content*, not its number. Add lines above, press <kbd>Enter</kbd> at the start of the line, delete a block elsewhere, and the bookmark moves along. If a file changes outside VS Code (a `git pull`, another tool), Kangaroo re-finds each bookmark by its text the next time the file opens.
 
 ### Stored in your workspace
 
-Bookmarks are saved to **`.vscode/jumper-bookmarks.json`**, with paths relative to the workspace, so you can commit the file and share it with your team:
+Bookmarks are saved to **`.vscode/kangaroo-bookmarks.json`**, with paths relative to the workspace, so you can commit the file and share it with your team:
 
 ```json
 {
@@ -90,30 +90,30 @@ Not on the Marketplace, so install it locally.
 
 ```bash
 npx @vscode/vsce package
-code --install-extension jumper-0.1.0.vsix
+code --install-extension kangaroo-0.1.0.vsix
 ```
 
 **Or copy the folder** into your extensions directory and run **Developer: Reload Window**:
 
 | OS | Extensions directory |
 | --- | --- |
-| Windows | `%USERPROFILE%\.vscode\extensions\bsimjoo.jumper-0.1.0` |
-| Linux | `~/.vscode/extensions/bsimjoo.jumper-0.1.0` |
-| macOS | `~/.vscode/extensions/bsimjoo.jumper-0.1.0` |
+| Windows | `%USERPROFILE%\.vscode\extensions\bsimjoo.kangaroo-0.1.0` |
+| Linux | `~/.vscode/extensions/bsimjoo.kangaroo-0.1.0` |
+| macOS | `~/.vscode/extensions/bsimjoo.kangaroo-0.1.0` |
 
 To hack on it, open the folder in VS Code and press <kbd>F5</kbd>.
 
 ## Customising keys
 
-Every shortcut is a normal VS Code keybinding; remap them in **Keyboard Shortcuts** (search for `jumper`).
+Every shortcut is a normal VS Code keybinding; remap them in **Keyboard Shortcuts** (search for `kangaroo`).
 
-Jumper's "insert line" keys call VS Code's `editor.action.insertLineAfter` / `insertLineBefore`. If you rebind those, rebind `jumper.acceptInsertAfter` / `jumper.acceptInsertBefore` to match.
+Kangaroo's "insert line" keys call VS Code's `editor.action.insertLineAfter` / `insertLineBefore`. If you rebind those, rebind `kangaroo.acceptInsertAfter` / `kangaroo.acceptInsertBefore` to match.
 
-> Jumper overrides <kbd>Ctrl</kbd>+<kbd>L</kbd> (expand line selection) and <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>L</kbd> (select all occurrences) inside the editor. Rebind `jumper.start` / `jumper.peek` if you'd rather keep them.
+> Kangaroo overrides <kbd>Ctrl</kbd>+<kbd>L</kbd> (expand line selection) and <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>L</kbd> (select all occurrences) inside the editor. Rebind `kangaroo.start` / `kangaroo.peek` if you'd rather keep them.
 
 ## Good to know
 
-- While the go-to-line mode is on, Jumper takes over the `type` command; it lets go the moment you leave the mode, so it won't fight extensions like Vim.
+- While the go-to-line mode is on, Kangaroo takes over the `type` command; it lets go the moment you leave the mode, so it won't fight extensions like Vim.
 - Peek focus is handled for you whatever `editor.peekWidgetDefaultFocus` is set to.
 
 ## Development
@@ -128,4 +128,4 @@ The position tracker lives in [`positions.js`](positions.js) and has no VS Code 
 
 Copyright © 2026 BSimjoo <bsimjoo@gmail.com>
 
-Jumper is free software: you can redistribute it and/or modify it under the terms of the **GNU General Public License v3.0** as published by the Free Software Foundation. It is distributed in the hope that it will be useful, but **without any warranty**. See [LICENSE](LICENSE) for the full text.
+Kangaroo is free software: you can redistribute it and/or modify it under the terms of the **GNU General Public License v3.0** as published by the Free Software Foundation. It is distributed in the hope that it will be useful, but **without any warranty**. See [LICENSE](LICENSE) for the full text.

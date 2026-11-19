@@ -20,8 +20,8 @@ const history = []; // [{ uri, line, character }], newest last
 
 function setActive(value) {
   active = value;
-  vscode.commands.executeCommand('setContext', 'jumper.active', value);
-  vscode.commands.executeCommand('setContext', 'jumper.peek', value && peekMode);
+  vscode.commands.executeCommand('setContext', 'kangaroo.active', value);
+  vscode.commands.executeCommand('setContext', 'kangaroo.peek', value && peekMode);
   if (value) {
     updateStatus();
     statusItem.show();
@@ -74,7 +74,7 @@ function enterMode(editor, peek) {
   } catch (e) {
     setActive(false);
     vscode.window.showWarningMessage(
-      'Jumper: another extension already overrides the "type" command.');
+      'Kangaroo: another extension already overrides the "type" command.');
   }
 }
 
@@ -287,7 +287,7 @@ async function jumpBack() {
     if (!here || entry.uri !== here.uri || entry.line !== here.line) break;
   }
   if (!entry) {
-    vscode.window.setStatusBarMessage('Jumper: no earlier position', 2000);
+    vscode.window.setStatusBarMessage('Kangaroo: no earlier position', 2000);
     return;
   }
 
@@ -320,28 +320,28 @@ function activate(context) {
   context.subscriptions.push(
     statusItem,
     { dispose: exitMode },
-    vscode.commands.registerCommand('jumper.start', () => {
+    vscode.commands.registerCommand('kangaroo.start', () => {
       const editor = vscode.window.activeTextEditor;
       if (editor && !active) enterMode(editor, false);
     }),
-    vscode.commands.registerCommand('jumper.peek', () => {
+    vscode.commands.registerCommand('kangaroo.peek', () => {
       const editor = vscode.window.activeTextEditor;
       if (editor && !active) enterMode(editor, true);
     }),
-    vscode.commands.registerCommand('jumper.acceptInsertAfter',
+    vscode.commands.registerCommand('kangaroo.acceptInsertAfter',
       () => acceptAndRun('editor.action.insertLineAfter')),
-    vscode.commands.registerCommand('jumper.acceptInsertBefore',
+    vscode.commands.registerCommand('kangaroo.acceptInsertBefore',
       () => acceptAndRun('editor.action.insertLineBefore')),
-    vscode.commands.registerCommand('jumper.lineEnd', () =>
+    vscode.commands.registerCommand('kangaroo.lineEnd', () =>
       active && (peekMode ? peekLineMove(true) : moveInLine(true))),
-    vscode.commands.registerCommand('jumper.lineStart', () =>
+    vscode.commands.registerCommand('kangaroo.lineStart', () =>
       active && (peekMode ? peekLineMove(false) : moveInLine(false))),
-    vscode.commands.registerCommand('jumper.accept', () => (peekMode ? acceptPeek() : accept())),
-    vscode.commands.registerCommand('jumper.cancel', cancel),
-    vscode.commands.registerCommand('jumper.backspace', backspace),
-    vscode.commands.registerCommand('jumper.lineUp', () => stepLine(-1)),
-    vscode.commands.registerCommand('jumper.lineDown', () => stepLine(1)),
-    vscode.commands.registerCommand('jumper.back', jumpBack),
+    vscode.commands.registerCommand('kangaroo.accept', () => (peekMode ? acceptPeek() : accept())),
+    vscode.commands.registerCommand('kangaroo.cancel', cancel),
+    vscode.commands.registerCommand('kangaroo.backspace', backspace),
+    vscode.commands.registerCommand('kangaroo.lineUp', () => stepLine(-1)),
+    vscode.commands.registerCommand('kangaroo.lineDown', () => stepLine(1)),
+    vscode.commands.registerCommand('kangaroo.back', jumpBack),
     vscode.workspace.onDidChangeTextDocument(onDocumentChange),
     // Cursor moved by arrows/mouse, or another editor focused: leave the mode.
     vscode.window.onDidChangeTextEditorSelection((e) => {

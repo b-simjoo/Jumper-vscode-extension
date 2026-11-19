@@ -1,6 +1,6 @@
 {
-  "name": "jumper",
-  "displayName": "Jumper",
+  "name": "kangaroo",
+  "displayName": "Kangaroo",
   "description": "Inline go-to-line (no dialog) with a jump-back history that survives edits.",
   "version": "0.1.0",
   "publisher": "bsimjoo",
@@ -17,193 +17,193 @@
   "contributes": {
     "commands": [
       {
-        "command": "jumper.start",
-        "title": "Jumper: Go to Line (inline)"
+        "command": "kangaroo.start",
+        "title": "Kangaroo: Go to Line (inline)"
       },
       {
-        "command": "jumper.back",
-        "title": "Jumper: Jump Back"
+        "command": "kangaroo.back",
+        "title": "Kangaroo: Jump Back"
       },
       {
-        "command": "jumper.peek",
-        "title": "Jumper: Peek Line"
+        "command": "kangaroo.peek",
+        "title": "Kangaroo: Peek Line"
       },
       {
-        "command": "jumper.lineEnd",
-        "title": "Jumper: Jump Mode - End of Line"
+        "command": "kangaroo.lineEnd",
+        "title": "Kangaroo: Jump Mode - End of Line"
       },
       {
-        "command": "jumper.lineStart",
-        "title": "Jumper: Jump Mode - Start of Line"
+        "command": "kangaroo.lineStart",
+        "title": "Kangaroo: Jump Mode - Start of Line"
       },
       {
-        "command": "jumper.acceptInsertAfter",
-        "title": "Jumper: Accept and Insert Line Below"
+        "command": "kangaroo.acceptInsertAfter",
+        "title": "Kangaroo: Accept and Insert Line Below"
       },
       {
-        "command": "jumper.acceptInsertBefore",
-        "title": "Jumper: Accept and Insert Line Above"
+        "command": "kangaroo.acceptInsertBefore",
+        "title": "Kangaroo: Accept and Insert Line Above"
       },
       {
-        "command": "jumper.lineUp",
-        "title": "Jumper: Jump Mode - Previous Line"
+        "command": "kangaroo.lineUp",
+        "title": "Kangaroo: Jump Mode - Previous Line"
       },
       {
-        "command": "jumper.lineDown",
-        "title": "Jumper: Jump Mode - Next Line"
+        "command": "kangaroo.lineDown",
+        "title": "Kangaroo: Jump Mode - Next Line"
       },
       {
-        "command": "jumper.accept",
-        "title": "Jumper: Accept"
+        "command": "kangaroo.accept",
+        "title": "Kangaroo: Accept"
       },
       {
-        "command": "jumper.cancel",
-        "title": "Jumper: Cancel"
+        "command": "kangaroo.cancel",
+        "title": "Kangaroo: Cancel"
       },
       {
-        "command": "jumper.backspace",
-        "title": "Jumper: Backspace"
+        "command": "kangaroo.backspace",
+        "title": "Kangaroo: Backspace"
       },
       {
-        "command": "jumper.bookmark.toggle",
-        "title": "Jumper: Toggle Bookmark on Line"
+        "command": "kangaroo.bookmark.toggle",
+        "title": "Kangaroo: Toggle Bookmark on Line"
       },
       {
-        "command": "jumper.bookmark.rename",
-        "title": "Jumper: Rename Bookmark",
+        "command": "kangaroo.bookmark.rename",
+        "title": "Kangaroo: Rename Bookmark",
         "icon": "$(edit)"
       },
       {
-        "command": "jumper.bookmark.delete",
-        "title": "Jumper: Delete Bookmark",
+        "command": "kangaroo.bookmark.delete",
+        "title": "Kangaroo: Delete Bookmark",
         "icon": "$(trash)"
       },
       {
-        "command": "jumper.bookmark.clearAll",
-        "title": "Jumper: Delete All Bookmarks",
+        "command": "kangaroo.bookmark.clearAll",
+        "title": "Kangaroo: Delete All Bookmarks",
         "icon": "$(clear-all)"
       },
       {
-        "command": "jumper.bookmark.open",
-        "title": "Jumper: Open Bookmark"
+        "command": "kangaroo.bookmark.open",
+        "title": "Kangaroo: Open Bookmark"
       },
       {
-        "command": "jumper.bookmarks.pick",
-        "title": "Jumper: Search Bookmarks",
+        "command": "kangaroo.bookmarks.pick",
+        "title": "Kangaroo: Search Bookmarks",
         "icon": "$(search)"
       },
       {
-        "command": "jumper.bookmarks.pickOpenSide",
-        "title": "Jumper: Bookmark List - Open to the Side"
+        "command": "kangaroo.bookmarks.pickOpenSide",
+        "title": "Kangaroo: Bookmark List - Open to the Side"
       },
       {
-        "command": "jumper.bookmarks.pickPeek",
-        "title": "Jumper: Bookmark List - Peek"
+        "command": "kangaroo.bookmarks.pickPeek",
+        "title": "Kangaroo: Bookmark List - Peek"
       }
     ],
     "keybindings": [
       {
-        "command": "jumper.start",
+        "command": "kangaroo.start",
         "key": "ctrl+l",
         "mac": "cmd+l",
-        "when": "editorTextFocus && !jumper.active"
+        "when": "editorTextFocus && !kangaroo.active"
       },
       {
-        "command": "jumper.peek",
+        "command": "kangaroo.peek",
         "key": "ctrl+shift+l",
         "mac": "cmd+shift+l",
-        "when": "editorTextFocus && !jumper.active"
+        "when": "editorTextFocus && !kangaroo.active"
       },
       {
-        "command": "jumper.lineEnd",
+        "command": "kangaroo.lineEnd",
         "key": "right",
-        "when": "jumper.active && (editorTextFocus || referenceSearchVisible)"
+        "when": "kangaroo.active && (editorTextFocus || referenceSearchVisible)"
       },
       {
-        "command": "jumper.lineStart",
+        "command": "kangaroo.lineStart",
         "key": "left",
-        "when": "jumper.active && (editorTextFocus || referenceSearchVisible)"
+        "when": "kangaroo.active && (editorTextFocus || referenceSearchVisible)"
       },
       {
-        "command": "jumper.back",
+        "command": "kangaroo.back",
         "key": "ctrl+alt+l",
         "mac": "cmd+alt+l",
         "when": "editorTextFocus"
       },
       {
-        "command": "jumper.backspace",
+        "command": "kangaroo.backspace",
         "key": "backspace",
-        "when": "jumper.active && (editorTextFocus || referenceSearchVisible)"
+        "when": "kangaroo.active && (editorTextFocus || referenceSearchVisible)"
       },
       {
-        "command": "jumper.accept",
+        "command": "kangaroo.accept",
         "key": "enter",
-        "when": "jumper.active && (editorTextFocus || referenceSearchVisible)"
+        "when": "kangaroo.active && (editorTextFocus || referenceSearchVisible)"
       },
       {
-        "command": "jumper.acceptInsertAfter",
+        "command": "kangaroo.acceptInsertAfter",
         "key": "ctrl+enter",
         "mac": "cmd+enter",
-        "when": "jumper.active && (editorTextFocus || referenceSearchVisible)"
+        "when": "kangaroo.active && (editorTextFocus || referenceSearchVisible)"
       },
       {
-        "command": "jumper.acceptInsertBefore",
+        "command": "kangaroo.acceptInsertBefore",
         "key": "ctrl+shift+enter",
         "mac": "cmd+shift+enter",
-        "when": "jumper.active && (editorTextFocus || referenceSearchVisible)"
+        "when": "kangaroo.active && (editorTextFocus || referenceSearchVisible)"
       },
       {
-        "command": "jumper.lineUp",
+        "command": "kangaroo.lineUp",
         "key": "up",
-        "when": "jumper.active && (editorTextFocus || referenceSearchVisible)"
+        "when": "kangaroo.active && (editorTextFocus || referenceSearchVisible)"
       },
       {
-        "command": "jumper.lineDown",
+        "command": "kangaroo.lineDown",
         "key": "down",
-        "when": "jumper.active && (editorTextFocus || referenceSearchVisible)"
+        "when": "kangaroo.active && (editorTextFocus || referenceSearchVisible)"
       },
       {
-        "command": "jumper.cancel",
+        "command": "kangaroo.cancel",
         "key": "escape",
-        "when": "jumper.active && (editorTextFocus || referenceSearchVisible)"
+        "when": "kangaroo.active && (editorTextFocus || referenceSearchVisible)"
       },
       {
-        "command": "jumper.bookmark.toggle",
+        "command": "kangaroo.bookmark.toggle",
         "key": "ctrl+alt+k",
         "mac": "cmd+alt+k",
         "when": "editorTextFocus"
       },
       {
-        "command": "jumper.bookmarks.pick",
+        "command": "kangaroo.bookmarks.pick",
         "key": "ctrl+alt+j",
         "mac": "cmd+alt+j"
       },
       {
-        "command": "jumper.bookmarks.pickOpenSide",
+        "command": "kangaroo.bookmarks.pickOpenSide",
         "key": "ctrl+enter",
         "mac": "cmd+enter",
-        "when": "inQuickOpen && jumper.bookmarkPicker"
+        "when": "inQuickOpen && kangaroo.bookmarkPicker"
       },
       {
-        "command": "jumper.bookmarks.pickPeek",
+        "command": "kangaroo.bookmarks.pickPeek",
         "key": "ctrl+shift+enter",
         "mac": "cmd+shift+enter",
-        "when": "inQuickOpen && jumper.bookmarkPicker"
+        "when": "inQuickOpen && kangaroo.bookmarkPicker"
       }
     ],
     "viewsContainers": {
       "activitybar": [
         {
-          "id": "jumper",
-          "title": "Jumper",
+          "id": "kangaroo",
+          "title": "Kangaroo",
           "icon": "media/activity.svg"
         }
       ]
     },
     "views": {
-      "jumper": [
+      "kangaroo": [
         {
-          "id": "jumper.bookmarks",
+          "id": "kangaroo.bookmarks",
           "name": "Bookmarks"
         }
       ]
@@ -211,49 +211,49 @@
     "menus": {
       "view/title": [
         {
-          "command": "jumper.bookmarks.pick",
-          "when": "view == jumper.bookmarks",
+          "command": "kangaroo.bookmarks.pick",
+          "when": "view == kangaroo.bookmarks",
           "group": "navigation@1"
         },
         {
-          "command": "jumper.bookmark.clearAll",
-          "when": "view == jumper.bookmarks",
+          "command": "kangaroo.bookmark.clearAll",
+          "when": "view == kangaroo.bookmarks",
           "group": "navigation@2"
         }
       ],
       "view/item/context": [
         {
-          "command": "jumper.bookmark.rename",
-          "when": "view == jumper.bookmarks && viewItem == bookmark",
+          "command": "kangaroo.bookmark.rename",
+          "when": "view == kangaroo.bookmarks && viewItem == bookmark",
           "group": "inline@1"
         },
         {
-          "command": "jumper.bookmark.delete",
-          "when": "view == jumper.bookmarks && viewItem == bookmark",
+          "command": "kangaroo.bookmark.delete",
+          "when": "view == kangaroo.bookmarks && viewItem == bookmark",
           "group": "inline@2"
         },
         {
-          "command": "jumper.bookmark.rename",
-          "when": "view == jumper.bookmarks && viewItem == bookmark",
+          "command": "kangaroo.bookmark.rename",
+          "when": "view == kangaroo.bookmarks && viewItem == bookmark",
           "group": "1_modification@1"
         },
         {
-          "command": "jumper.bookmark.delete",
-          "when": "view == jumper.bookmarks && viewItem == bookmark",
+          "command": "kangaroo.bookmark.delete",
+          "when": "view == kangaroo.bookmarks && viewItem == bookmark",
           "group": "1_modification@2"
         }
       ],
       "commandPalette": [
         {
-          "command": "jumper.bookmark.open",
+          "command": "kangaroo.bookmark.open",
           "when": "false"
         },
         {
-          "command": "jumper.bookmarks.pickOpenSide",
+          "command": "kangaroo.bookmarks.pickOpenSide",
           "when": "false"
         },
         {
-          "command": "jumper.bookmarks.pickPeek",
+          "command": "kangaroo.bookmarks.pickPeek",
           "when": "false"
         }
       ]
