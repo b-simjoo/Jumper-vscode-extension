@@ -61,6 +61,8 @@ In the search list:
 | <kbd>Ctrl</kbd>+<kbd>Enter</kbd> | <kbd>⌘</kbd><kbd>Enter</kbd> | Open it in a side editor group |
 | <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Enter</kbd> | <kbd>⌘</kbd><kbd>⇧</kbd><kbd>Enter</kbd> | Peek it (and edit it in place) |
 
+You can also add or remove a bookmark from the editor's right-click menu (**Kangaroo: Toggle Bookmark**).
+
 Bookmarked lines get a gutter icon and an overview-ruler mark; hover to see the title. The **Kangaroo** view in the Activity Bar lists everything grouped by file, with inline rename and delete.
 
 ### Bookmarks follow the code
