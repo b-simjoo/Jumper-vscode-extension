@@ -21,7 +21,8 @@ Press <kbd>Ctrl</kbd>+<kbd>L</kbd> (macOS: <kbd>⌘</kbd><kbd>L</kbd>) and just 
 | Key | macOS | What it does |
 | --- | --- | --- |
 | `0`–`9` (also `۰`–`۹`, `٠`–`٩`) | same | Jump to that line as you type |
-| <kbd>Backspace</kbd> | same | Delete a digit. When the number is empty you're back where you started |
+| `+` / `-` | same | Switch the gutter to **relative** line numbers (temporarily) and read the number as an offset from the current line: `+5` is five lines down, `-3` three lines up. The target is highlighted and your cursor stays put until you accept |
+| <kbd>Backspace</kbd> | same | Delete a digit. When the number is empty you're back where you started (in relative mode, one more press drops back to absolute numbers) |
 | <kbd>↑</kbd> / <kbd>↓</kbd> | same | Previous / next line number |
 | <kbd>←</kbd> / <kbd>→</kbd> | same | Start / end of the line, then leave the mode |
 | <kbd>Enter</kbd> | same | Leave the mode and stay on the line |
@@ -30,7 +31,7 @@ Press <kbd>Ctrl</kbd>+<kbd>L</kbd> (macOS: <kbd>⌘</kbd><kbd>L</kbd>) and just 
 | <kbd>Esc</kbd> | same | Cancel and return to the original position |
 | any other key | same | Leave the mode and type that character right there |
 
-Moving the cursor with the mouse or switching editors also leaves the mode.
+The line you are heading for carries a **landing marker** in the gutter (an ellipse with a down arrow landing on it), in peek mode too, so you can always see where you will end up. Moving the cursor with the mouse or switching editors also leaves the mode. Your `editor.lineNumbers` setting is never touched: relative numbers are applied to the editor only for as long as the mode lasts.
 
 ## Peek mode
 
@@ -38,7 +39,9 @@ Press <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>L</kbd> (macOS: <kbd>⌘</kbd><kbd>�
 
 - <kbd>Enter</kbd>, <kbd>Ctrl</kbd>+<kbd>Enter</kbd>, <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Enter</kbd>, <kbd>←</kbd>/<kbd>→</kbd> or any character focus the editor inside the box
 - <kbd>Esc</kbd> closes the box
+- <kbd>Backspace</kbd> deletes a digit; with the number empty the box closes
 - <kbd>↑</kbd> / <kbd>↓</kbd> flip through neighbouring lines
+- `+` / `-` work here too: the main editor switches to relative numbers (counted from your cursor, which stays put) and the peek box shows the line you point at
 
 ## Jump back
 
@@ -63,7 +66,7 @@ In the search list:
 
 You can also add or remove a bookmark from the editor's right-click menu (**Kangaroo: Toggle Bookmark**).
 
-Bookmarked lines get a gutter icon and an overview-ruler mark; hover to see the title. The **Kangaroo** view in the Activity Bar lists everything grouped by file, with inline rename and delete.
+Bookmarked lines get a gutter icon and an overview-ruler mark; hover to see the title. The **Kangaroo** view in the Activity Bar lists everything grouped by file, with inline rename and delete buttons, a search button and a **Delete All** button in the view's title bar.
 
 ### Bookmarks follow the code
 
@@ -123,6 +126,8 @@ Kangaroo's "insert line" keys call VS Code's `editor.action.insertLineAfter` / `
 ```bash
 node test-positions.js   # unit tests for the edit-tracking logic
 ```
+
+Pushing a tag is not enough to publish: create a GitHub **release** whose tag matches the `version` in `package.json` (for `0.1.1`, tag `v0.1.1`). A workflow then runs the tests, builds the `.vsix` and attaches it to the release.
 
 The position tracker lives in [`positions.js`](positions.js) and has no VS Code dependency.
 

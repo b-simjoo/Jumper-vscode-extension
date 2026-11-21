@@ -14,6 +14,16 @@ let peekTimer = null;
 let pendingPeek = null; // { editor, line } scheduled but not yet shown
 let typeHook = null; // disposable for our temporary `type` override
 let statusItem;
+// Relative mode: typing "+" or "-" shows relative line numbers and treats the
+// digits as an offset from `relBase` (the cursor line at that moment).
+let sign = 0; // 0 = absolute, 1 = down (+), -1 = up (-)
+let relBase = 0;
+let relTarget = null; // line the offset currently points at (non-peek preview)
+let relEditor = null; // editor whose line numbers we switched
+let savedLineNumbers;
+let highlight; // decoration for the previewed target line
+let landing; // gutter marker (ellipse + down arrow) on the line being chosen
+let markEditor = null;
 const history = []; // [{ uri, line, character }], newest last
 
 // ---------- helpers ----------
@@ -31,7 +41,79 @@ function setActive(value) {
 }
 
 function updateStatus() {
-  statusItem.text = `$(arrow-right) ${peekMode ? 'Peek' : 'Jump to'} line: ${buffer}`;
+  const prefix = sign > 0 ? '+' : sign < 0 ? '-' : '';
+  statusItem.text = `$(arrow-right) ${peekMode ? 'Peek' : 'Jump to'} line: ${prefix}${buffer}` +
+    (sign ? ' (relative)' : '');
+}
+
+function markLanding(editor, line) {
+  markEditor = editor;
+  editor.setDecorations(landing, [new vscode.Range(line, 0, line, 0)]);
+}
+
+function clearLanding() {
+  if (markEditor) {
+    try { markEditor.setDecorations(landing, []); } catch (e) { /* editor closed */ }
+    markEditor = null;
+  }
+}
+
+function clearHighlight() {
+  clearLanding();
+  if (relEditor) {
+    try { relEditor.setDecorations(highlight, []); } catch (e) { /* editor closed */ }
+  }
+}
+
+function restoreLineNumbers() {
+  clearHighlight();
+  if (relEditor && savedLineNumbers !== undefined) {
+    try { relEditor.options = { lineNumbers: savedLineNumbers }; } catch (e) { /* editor closed */ }
+  }
+  relEditor = null;
+  savedLineNumbers = undefined;
+  sign = 0;
+  relTarget = null;
+}
+
+/** "+" / "-": show relative numbers and read the digits as an offset. */
+function setSign(newSign) {
+  const editor = vscode.window.activeTextEditor;
+  if (!editor || !origin || editor.document.uri.toString() !== origin.uri) return;
+  if (sign === 0) {
+    relBase = editor.selection.active.line;
+    buffer = '';
+    relEditor = editor;
+    savedLineNumbers = editor.options.lineNumbers;
+    editor.options = { lineNumbers: vscode.TextEditorLineNumbersStyle.Relative };
+    if (peekMode) {
+      clearTimeout(peekTimer);
+      pendingPeek = null;
+      closePeek();
+    }
+  }
+  sign = newSign;
+  updateStatus();
+  if (buffer) jumpToBuffer();
+}
+
+/** The line the typed number points at, or null while nothing is typed. */
+function targetLineFor(editor) {
+  const last = editor.document.lineCount - 1;
+  if (sign) {
+    if (buffer === '') return null;
+    return Math.min(Math.max(relBase + sign * parseInt(buffer, 10), 0), last);
+  }
+  return Math.min(Math.max(parseInt(buffer, 10), 1), last + 1) - 1;
+}
+
+/** Relative mode keeps the cursor still while typing; move it for real now. */
+function commitRelative() {
+  const editor = vscode.window.activeTextEditor;
+  if (sign && relTarget !== null && editor && origin &&
+      editor.document.uri.toString() === origin.uri) {
+    goTo(editor, relTarget, 0);
+  }
 }
 
 /** Accepts ASCII, Persian (۰-۹) and Arabic-Indic (٠-٩) digits. */
@@ -90,6 +172,8 @@ function exitMode() {
     typeHook.dispose();
     typeHook = null;
   }
+  clearLanding();
+  restoreLineNumbers();
   buffer = '';
   origin = null;
   peekMode = false;
@@ -99,8 +183,9 @@ function exitMode() {
 /** Leave the mode and stay where we are; remember where we came from. */
 function accept() {
   if (!active) return;
+  commitRelative();
   const editor = vscode.window.activeTextEditor;
-  if (origin && buffer && editor && editor.document.uri.toString() === origin.uri &&
+  if (origin && (buffer || sign) && editor && editor.document.uri.toString() === origin.uri &&
       editor.selection.active.line !== origin.line) {
     pushHistory({ ...origin });
   }
@@ -120,6 +205,7 @@ function cancel() {
 
 /** Cursor to end/start of the current line, then leave the mode. */
 function moveInLine(toEnd) {
+  commitRelative();
   const editor = vscode.window.activeTextEditor;
   if (editor) {
     const line = editor.selection.active.line;
@@ -197,9 +283,15 @@ function jumpToBuffer() {
     exitMode();
     return;
   }
-  const n = parseInt(buffer, 10);
-  const line = Math.min(Math.max(n, 1), editor.document.lineCount) - 1;
+  const line = targetLineFor(editor);
   updateStatus();
+  if (line === null) {
+    relTarget = null;
+    clearHighlight();
+    return;
+  }
+  relTarget = sign ? line : null;
+  markLanding(editor, line);
   if (peekMode) {
     clearTimeout(peekTimer);
     pendingPeek = { editor, line };
@@ -209,13 +301,26 @@ function jumpToBuffer() {
     }, 120);
     return;
   }
+  if (sign) {
+    // Cursor stays put so the relative numbers keep meaning; just preview.
+    const range = new vscode.Range(line, 0, line, 0);
+    editor.setDecorations(highlight, [range]);
+    editor.revealRange(range, vscode.TextEditorRevealType.InCenterIfOutsideViewport);
+    return;
+  }
   goTo(editor, line, 0);
 }
 
 function onType(args) {
   if (!active) return vscode.commands.executeCommand('default:type', args);
 
-  const digits = normalizeDigits(args && args.text);
+  const key = args && args.text;
+  if (key === '+' || key === '-') {
+    setSign(key === '+' ? 1 : -1);
+    return undefined;
+  }
+
+  const digits = normalizeDigits(key);
   if (digits !== null) {
     if (buffer.length + digits.length <= MAX_DIGITS) {
       buffer += digits;
@@ -236,6 +341,16 @@ function onType(args) {
 function stepLine(delta) {
   const editor = vscode.window.activeTextEditor;
   if (!active || !editor) return;
+  if (sign) {
+    // Relative: move the signed offset by one, kept inside the file.
+    const last = editor.document.lineCount - 1;
+    const offset = (buffer ? sign * parseInt(buffer, 10) : 0) + delta;
+    const clamped = Math.min(Math.max(offset, -relBase), last - relBase);
+    if (clamped !== 0) sign = clamped < 0 ? -1 : 1;
+    buffer = String(Math.abs(clamped));
+    jumpToBuffer();
+    return;
+  }
   const last = editor.document.lineCount;
   const current = buffer !== ''
     ? Math.min(Math.max(parseInt(buffer, 10), 1), last)
@@ -246,12 +361,33 @@ function stepLine(delta) {
 
 function backspace() {
   if (!active) return;
+  if (sign) {
+    if (buffer === '') {
+      // Nothing left to delete but the sign itself: back to absolute numbers.
+      restoreLineNumbers();
+      updateStatus();
+      return;
+    }
+    buffer = buffer.slice(0, -1);
+    if (buffer === '') {
+      relTarget = null;
+      clearHighlight();
+      clearTimeout(peekTimer);
+      pendingPeek = null;
+      if (peekMode) closePeek();
+      updateStatus();
+    } else {
+      jumpToBuffer();
+    }
+    return;
+  }
   buffer = buffer.slice(0, -1);
   if (peekMode) {
     if (buffer === '') {
       clearTimeout(peekTimer);
       pendingPeek = null;
       closePeek();
+      clearLanding();
       updateStatus();
     } else {
       jumpToBuffer();
@@ -264,6 +400,7 @@ function backspace() {
     if (origin && editor && editor.document.uri.toString() === origin.uri) {
       goTo(editor, origin.line, origin.character);
     }
+    clearLanding();
     updateStatus();
   } else {
     jumpToBuffer();
@@ -316,9 +453,22 @@ function activate(context) {
   require('./bookmarks').activate(context, { recordJump: pushHistory });
   statusItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 1000);
   setActive(false);
+  landing = vscode.window.createTextEditorDecorationType({
+    gutterIconPath: vscode.Uri.file(context.asAbsolutePath('media/landing.svg')),
+    gutterIconSize: 'contain',
+    rangeBehavior: vscode.DecorationRangeBehavior.ClosedClosed,
+  });
+  highlight = vscode.window.createTextEditorDecorationType({
+    isWholeLine: true,
+    backgroundColor: new vscode.ThemeColor('editor.rangeHighlightBackground'),
+    overviewRulerColor: new vscode.ThemeColor('editorOverviewRuler.rangeHighlightForeground'),
+    overviewRulerLane: vscode.OverviewRulerLane.Center,
+  });
 
   context.subscriptions.push(
     statusItem,
+    highlight,
+    landing,
     { dispose: exitMode },
     vscode.commands.registerCommand('kangaroo.start', () => {
       const editor = vscode.window.activeTextEditor;
