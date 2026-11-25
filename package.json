@@ -1,7 +1,7 @@
 {
   "name": "kangaroo",
   "displayName": "Kangaroo",
-  "description": "Inline go-to-line (no dialog) with a jump-back history that survives edits.",
+  "description": "Dialog-free go-to-line with relative offsets, peek-and-edit any line, live line search, an edit-proof jump-back history and workspace bookmarks that follow your code.",
   "version": "1.2.0",
   "publisher": "bsimjoo",
   "engines": {

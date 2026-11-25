@@ -3,10 +3,11 @@
 # Kangaroo
 
 **Move around your code at the speed of thought.**
-Kangaroo turns "go to line" into a dialog-free, keyboard-only flow, adds a jump-back history that survives edits, and ships workspace-wide bookmarks that stick to the *code*, not to a line number.
+Kangaroo turns "go to line" into a dialog-free, keyboard-only flow, lets you peek at and edit any line without leaving your spot, searches lines with a live scrolling preview, keeps a jump-back history that survives edits, and ships workspace-wide bookmarks that stick to the *code*, not to a line number.
 
-- ⌨️ **Inline go-to-line**: no dialog, just type the number
+- ⌨️ **Inline go-to-line**: no dialog, just type the number, or `+5` / `-3` for relative jumps
 - 👀 **Peek a line**: see (and edit) any line in a floating box without leaving your spot
+- 🔎 **Search lines**: list every matching line and watch the editor scroll to each result as you move through them
 - ↩️ **Jump back**: return to where you were, even after the file changed
 - 🔖 **Bookmarks**: titled, tracked through edits, saved in `.vscode/`, searchable
 
