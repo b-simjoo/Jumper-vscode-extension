@@ -106,16 +106,16 @@ Not on the Marketplace, so install it locally.
 
 ```bash
 npx @vscode/vsce package
-code --install-extension kangaroo-0.1.1.vsix
+code --install-extension kangaroo-1.2.0.vsix
 ```
 
 **Or copy the folder** into your extensions directory and run **Developer: Reload Window**:
 
 | OS | Extensions directory |
 | --- | --- |
-| Windows | `%USERPROFILE%\.vscode\extensions\bsimjoo.kangaroo-0.1.1` |
-| Linux | `~/.vscode/extensions/bsimjoo.kangaroo-0.1.1` |
-| macOS | `~/.vscode/extensions/bsimjoo.kangaroo-0.1.1` |
+| Windows | `%USERPROFILE%\.vscode\extensions\bsimjoo.kangaroo-1.2.0` |
+| Linux | `~/.vscode/extensions/bsimjoo.kangaroo-1.2.0` |
+| macOS | `~/.vscode/extensions/bsimjoo.kangaroo-1.2.0` |
 
 To hack on it, open the folder in VS Code and press <kbd>F5</kbd>.
 
@@ -138,7 +138,7 @@ Kangaroo's "insert line" keys call VS Code's `editor.action.insertLineAfter` / `
 node test-positions.js   # unit tests for the edit-tracking logic
 ```
 
-Pushing a tag is not enough to publish: create a GitHub **release** whose tag matches the `version` in `package.json` (for `0.1.1`, tag `v0.1.1`). A workflow then runs the tests, builds the `.vsix` and attaches it to the release.
+Pushing a tag is not enough to publish: create a GitHub **release** whose tag matches the `version` in `package.json` (for `1.2.0`, tag `v1.2.0`). A workflow then runs the tests, builds the `.vsix` and attaches it to the release.
 
 The position tracker lives in [`positions.js`](positions.js) and has no VS Code dependency.
 
