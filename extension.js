@@ -451,6 +451,7 @@ function onDocumentChange(e) {
 
 function activate(context) {
   require('./bookmarks').activate(context, { recordJump: pushHistory });
+  require('./search').activate(context, { recordJump: pushHistory });
   statusItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 1000);
   setActive(false);
   landing = vscode.window.createTextEditorDecorationType({

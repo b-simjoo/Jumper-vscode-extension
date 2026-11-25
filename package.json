@@ -99,6 +99,10 @@
       {
         "command": "kangaroo.bookmarks.pickPeek",
         "title": "Kangaroo: Bookmark List - Peek"
+      },
+      {
+        "command": "kangaroo.search",
+        "title": "Kangaroo: Search Lines"
       }
     ],
     "keybindings": [
@@ -189,6 +193,12 @@
         "key": "ctrl+shift+enter",
         "mac": "cmd+shift+enter",
         "when": "inQuickOpen && kangaroo.bookmarkPicker"
+      },
+      {
+        "command": "kangaroo.search",
+        "key": "ctrl+k ctrl+g",
+        "mac": "cmd+k cmd+g",
+        "when": "editorTextFocus"
       }
     ],
     "viewsContainers": {

@@ -43,6 +43,17 @@ Press <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>L</kbd> (macOS: <kbd>⌘</kbd><kbd>�
 - <kbd>↑</kbd> / <kbd>↓</kbd> flip through neighbouring lines
 - `+` / `-` work here too: the main editor switches to relative numbers (counted from your cursor, which stays put) and the peek box shows the line you point at
 
+## Search lines
+
+Press <kbd>Ctrl</kbd>+<kbd>K</kbd> then <kbd>Ctrl</kbd>+<kbd>G</kbd> (macOS: <kbd>⌘</kbd><kbd>K</kbd> then <kbd>⌘</kbd><kbd>G</kbd>) and type: every line of the file that contains your text is listed under the input box.
+
+- Several words match lines containing **all** of them, in any order.
+- Matching is case-insensitive until you type an uppercase letter.
+- Moving through the results with <kbd>↑</kbd> / <kbd>↓</kbd> **previews** each one: the editor scrolls to it and marks the line, without moving your cursor.
+- <kbd>Enter</kbd> jumps to the match (the cursor lands on the matched text); <kbd>Esc</kbd> cancels and puts the view back exactly where it was.
+- If text is selected on a single line, it is used as the starting query.
+- The jump is recorded, so <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>L</kbd> takes you back.
+
 ## Jump back
 
 <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>L</kbd> (macOS: <kbd>⌘</kbd><kbd>⌥</kbd><kbd>L</kbd>) returns to where you were before your last jump (go-to-line or bookmark). Press it again to keep walking back.
